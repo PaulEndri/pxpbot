@@ -2,6 +2,7 @@ import ClanList from './lib/commands/clanList';
 import db from './lib/database/sqlize';
 import ClanRefresh from './lib/tasks/clanRefresh';
 import Inactive from './lib/commands/inactive';
+import RegisterTask from './lib/commands/register';
 import cron from 'node-cron';
 
 export default class App {
@@ -12,6 +13,19 @@ export default class App {
         let msg = message.content.toLowerCase();
         let ctx = msg.split(' ');
         let key = ctx[0];
+
+        if(key === '!registerclan' && adv) {
+            var registerTask = new RegisterTask(db);
+
+            registerTask
+                .run(ctx[1])
+                .then(clan => {
+                    message.channel.send(`Succesfully registered ${clan.name}`);
+                })
+                .catch(e => {
+                    message.channel.send(`An error has occured`);
+                })
+        }
 
         if(key === '!inactive' && adv) {
             const InactiveTask = new Inactive(db);

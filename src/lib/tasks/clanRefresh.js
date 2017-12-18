@@ -1,6 +1,7 @@
 import _BungieClan from '../database/models/bungieClan';
 import _BungieMembership from '../database/models/bungieMembership';
 import _BungieMember from '../database/models/bungieMember';
+import _BungieMemberError from '../database/models/bungieMemberError';
 import BungieSDK from 'bungie-sdk-alpha';
 
 export default class ClanRefresh {
@@ -64,16 +65,30 @@ export default class ClanRefresh {
                 })
         })
     }
-    
+
     async refreshMemberData(member, clan) {
+        const bungieMemberError = _BungieMemberError(this.db);
+
         try {
             let membership  = await this.refreshMembership(member, clan);
-            let destinyInfo = member.destinyUserInfo;        
-            let profile     = await BungieSDK.DestinyProfile.getProfile(destinyInfo.membershipType, [100], destinyInfo.membershipId);
-            let memberData  = await this.refreshMember(membership, profile.profile.data);
+            
+            try {            
+                let destinyInfo = member.destinyUserInfo;        
+                let profile     = await BungieSDK.DestinyProfile.getProfile(destinyInfo.membershipType, [100], destinyInfo.membershipId);
+                let memberData  = await this.refreshMember(membership, profile.profile.data);
+            }
+            catch(e) {
+                await bungieMemberError
+                    .create({
+                        membership_id: membership.id,
+                        response:      JSON.stringify(e),
+                        data:          JSON.stringify(member)
+                    })
+                console.log("[ERROR]");
+                console.log(e);
+            }
         }
         catch(e) {
-            // do error stuff here later
             console.log("[ERROR]");
             console.log(e);
         }
