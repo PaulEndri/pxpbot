@@ -1,5 +1,5 @@
 'use strict';
-import Sqlize from 'Sequelize';
+import Sqlize from 'sequelize';
 
 export default function Model(database) {
     return database.define('bungie_error_member', 
