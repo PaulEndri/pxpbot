@@ -13,8 +13,8 @@ export default class ClanRefresh {
     async getClan() {
         const BungieClan = _BungieClan(this.db);
         let queryObject  = {
-            order : [['updated_at', 'ASC']],
-            limit : this.limit
+            order : [['synced_at', 'ASC']],
+            limit : 1
         };
 
         return await BungieClan.find(queryObject);
@@ -137,8 +137,9 @@ export default class ClanRefresh {
 
             let group = await new BungieSDK.Group(clan.group_id);
             let updates = {
-                data : JSON.stringify(group.clean()),
-                member_count : group.detail.memberCount
+                data:         JSON.stringify(group.clean()),
+                member_count: group.detail.memberCount,
+                synced_at:    new Date()
             };
     
             clan

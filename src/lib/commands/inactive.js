@@ -5,6 +5,11 @@ import BungieSDK from 'bungie-sdk-alpha';
 import {Op} from 'sequelize';
 import moment from 'moment';
 
+const typeMap = {
+    "1" : "XB1",
+    "2" : "PS4",
+    "4" : "PC"
+};
 // I love sequelize - Not
 export default class Inactive {
     constructor(db) {
@@ -44,8 +49,8 @@ export default class Inactive {
                     resolve(results.map(_result => {
                         let _lastSeen = moment(_result.last_seen).format('MM/DD/YYYY');
                         let clanName  = _result['Member.Clan.name'];
-
-                        return `[${clanName}] - ${_result.name} was last seen ${_lastSeen}`;
+                        let type      = typeMap[_result['Member.membership_type']];
+                        return `[${clanName}]-[${type}] - ${_result.name} was last seen ${_lastSeen}`;
                     }));
                 });
         });
