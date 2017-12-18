@@ -1,5 +1,5 @@
 'use strict';
-import Sequelize from 'sequelize';
+import Sqlize from 'sequelize';
 
 export default function Model(database) {
     return database.define("bungie_clan",
