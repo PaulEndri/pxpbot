@@ -30,7 +30,20 @@ export default class App {
         clanlist
             .get(ctx[1] === 'open')
             .then(results => {
-                message.channel.send(results.join("\n"));
+                let _response = results.join("\n");
+                
+                if(_response.length < 2000) {
+                    message.channel.send(_response);
+                } else {
+                    let partCount = Math.ceil(_response.length/2000);
+                    let resultSize = Math.ceil(results.length/partCount);
+
+                    for(let i = 0; i < partCount; i++) {
+                        let chunk = results.slice(i*resultSize, (i*resultSize)+resultSize); 
+                        
+                        message.channel.send(chunk.join("\n"));
+                    }
+                }
             })
     }
 }
