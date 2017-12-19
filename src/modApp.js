@@ -6,7 +6,20 @@ import RegisterTask from './lib/commands/register';
 var refreshing = false;
 
 export default class ModeratorApp {
-    register(ctx, message) {
+    updates(ctx, message) {
+        let messages = [
+            "\nUpdates in the latest version:",
+            "\t- This command!",
+            "\t- !refresh now accepts an optional parameters of a bungie Group Id to forcefully refresh a specific group",
+            "\t- !inactive now filters out users already deleted"
+        ]
+
+        message.channel.send(messages.join("\n"));
+
+        return true;
+    }
+
+    registerclan(ctx, message) {
         var registerTask = new RegisterTask(db);
         
         return registerTask
@@ -55,7 +68,7 @@ export default class ModeratorApp {
         refreshing = true;
 
         return task
-            .run()
+            .run(ctx[1])
             .then(results => {
                 refreshing = false;
                 // do nothing

@@ -41,7 +41,8 @@ export default class Inactive {
                 where : {
                     last_seen : {
                         [Op.lte]: threshold
-                    }
+                    },
+                    deleted : false
                 },
                 raw : true
             })

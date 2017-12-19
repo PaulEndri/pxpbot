@@ -10,12 +10,16 @@ export default class ClanRefresh {
         this.msg = msg;
     }
 
-    async getClan() {
+    async getClan(id) {
         const BungieClan = _BungieClan(this.db);
         let queryObject  = {
             order : [['synced_at', 'ASC']],
             limit : 1
         };
+
+        if(!isNaN(id)) {
+            queryObject.where = {group_id : id};
+        }
 
         return await BungieClan.find(queryObject);
     }
@@ -129,9 +133,9 @@ export default class ClanRefresh {
         });
     }
 
-    run() {
+    run(id) {
         return new Promise(async (resolve, reject) => {
-            let clan  = await this.getClan();
+            let clan  = await this.getClan(id);
 
             this.log(`Refreshing next clan in queue: ${clan.name}`);
 
