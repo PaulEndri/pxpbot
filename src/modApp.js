@@ -1,6 +1,7 @@
 import ClanRefresh from './lib/tasks/clanRefresh';
 import Inactive from './lib/commands/inactive';
 import RegisterTask from './lib/commands/register';
+import ResponseMessage from './lib/util/responseMessage';
 
 var refreshing = false;
 
@@ -37,26 +38,13 @@ export default class ModeratorApp {
 
     inactive(ctx, message) {
         const InactiveTask = new Inactive(this.db);
-        let span = parseInt(ctx[1]) || 30;
+        let response       = new ResponseMessage(message);        
+        let span           = parseInt(ctx[1]) || 30;
 
         return InactiveTask
             .run(span)
+            .then(r => response.send(r))
             .then(results => {
-                let _response = results.join("\n");
-
-                if(_response.length < 2000) {
-                    message.channel.send(_response);
-                } else {
-                    let partCount = Math.ceil(_response.length/2000);
-                    let resultSize = Math.ceil(results.length/partCount);
-
-                    for(let i = 0; i < partCount; i++) {
-                        let chunk = results.slice(i*resultSize, (i*resultSize)+resultSize); 
-                        
-                        message.channel.send(chunk.join("\n"));
-                    }
-                }
-
                 message.channel.send(`A total of ${results.length} members have been inactive for ${span} days`);
             });
     }

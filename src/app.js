@@ -1,6 +1,7 @@
 import ClanList from './lib/commands/clanList';
 import db from './lib/database/sqlize';
 import ModApp from './modApp';
+import ResponseMessage from './lib/util/responseMessage';
 
 const modApp = new ModApp(db);
 
@@ -26,24 +27,10 @@ export default class App {
 
     clanlist(ctx, message) {
         let clanlist = new ClanList(db);
+        let response = new ResponseMessage(message);
 
         clanlist
             .get(ctx[1] === 'open')
-            .then(results => {
-                let _response = results.join("\n");
-                
-                if(_response.length < 2000) {
-                    message.channel.send(_response);
-                } else {
-                    let partCount = Math.ceil(_response.length/2000);
-                    let resultSize = Math.ceil(results.length/partCount);
-
-                    for(let i = 0; i < partCount; i++) {
-                        let chunk = results.slice(i*resultSize, (i*resultSize)+resultSize); 
-                        
-                        message.channel.send(chunk.join("\n"));
-                    }
-                }
-            })
+            .then((r) => response.send(r))
     }
 }
