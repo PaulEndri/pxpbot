@@ -8,7 +8,7 @@ export default class ResponseMessage {
             let _response = content.join("\n");
             
             if(_response.length < 2000) {
-                this.message.channel.send(_response);
+                this.msg.channel.send(_response);
             } else {
                 let partCount = Math.ceil(_response.length/2000);
                 let resultSize = Math.ceil(content.length/partCount);
@@ -16,7 +16,7 @@ export default class ResponseMessage {
                 for(let i = 0; i < partCount; i++) {
                     let chunk = content.slice(i*resultSize, (i*resultSize)+resultSize); 
                     
-                    this.message.channel.send(chunk.join("\n"));
+                    this.msg.channel.send(chunk.join("\n"));
                 }
             }
 

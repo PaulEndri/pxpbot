@@ -36,7 +36,11 @@ export default class Inactive {
         return new Promise((resolve, reject) => {
             BungieMember.findAll({
                 include : [
-                    {association: 'Member', include:[{association: 'Clan'}]}
+                    {
+                        association: 'Member', 
+                        where : {deleted: false},
+                        include:[{association: 'Clan'}]
+                    }
                 ],
                 where : {
                     last_seen : {
