@@ -15,7 +15,8 @@ export default class ModeratorApp {
             "\nUpdates in the latest version:",
             "\t- This command!",
             "\t- !refresh now accepts an optional parameters of a bungie Group Id to forcefully refresh a specific group",
-            "\t- !inactive now filters out users already deleted"
+            "\t- !inactive now filters out users already deleted",
+            "\t- !inactivecount functions identically to inactive, just only returns totals"
         ]
 
         message.channel.send(messages.join("\n"));
@@ -44,6 +45,17 @@ export default class ModeratorApp {
         return InactiveTask
             .run(span)
             .then(r => response.send(r))
+            .then(results => {
+                message.channel.send(`A total of ${results.length} members have been inactive for ${span} days`);
+            });
+    }
+
+    inactivecount(ctx, message) {
+        const InactiveTask = new Inactive(this.db);
+        let span           = parseInt(ctx[1]) || 30;
+
+        return InactiveTask
+            .run(span)
             .then(results => {
                 message.channel.send(`A total of ${results.length} members have been inactive for ${span} days`);
             });
