@@ -1,7 +1,8 @@
 import ClanList from './lib/commands/clanList';
+import db from './lib/database/sqlize';
 import ModApp from './modApp';
 
-const modApp = new ModApp();
+const modApp = new ModApp(db);
 
 export default class App {
     process(message) {
@@ -24,7 +25,9 @@ export default class App {
     }
 
     clanlist(ctx, message) {
-        ClanList
+        let clanlist = new ClanList(db);
+
+        clanlist
             .get(ctx[1] === 'open')
             .then(results => {
                 message.channel.send(results.join("\n"));

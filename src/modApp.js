@@ -1,4 +1,3 @@
-import db from './lib/database/sqlize';
 import ClanRefresh from './lib/tasks/clanRefresh';
 import Inactive from './lib/commands/inactive';
 import RegisterTask from './lib/commands/register';
@@ -6,6 +5,10 @@ import RegisterTask from './lib/commands/register';
 var refreshing = false;
 
 export default class ModeratorApp {
+    constructor(db) {
+        this.db = db;
+    }
+
     updates(ctx, message) {
         let messages = [
             "\nUpdates in the latest version:",
@@ -20,7 +23,7 @@ export default class ModeratorApp {
     }
 
     registerclan(ctx, message) {
-        var registerTask = new RegisterTask(db);
+        var registerTask = new RegisterTask(this.db);
         
         return registerTask
             .run(ctx[1])
@@ -33,7 +36,7 @@ export default class ModeratorApp {
     }
 
     inactive(ctx, message) {
-        const InactiveTask = new Inactive(db);
+        const InactiveTask = new Inactive(this.db);
         let span = parseInt(ctx[1]) || 30;
 
         return InactiveTask
@@ -64,7 +67,7 @@ export default class ModeratorApp {
             return false;
         }
     
-        let task   = new ClanRefresh(db, message);
+        let task   = new ClanRefresh(this.db, message);
         refreshing = true;
 
         return task

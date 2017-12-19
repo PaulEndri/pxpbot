@@ -1,11 +1,11 @@
-import BungieSDK from 'bungie-sdk-alpha';
-import clans from '../../data/clans';
+import {Group} from 'bungie-sdk-alpha';
+import _BungieClan from '../database/models/bungieClan';
 import moment from 'moment';
 import converter from 'roman-numeral-converter-mmxvi';
-const Clan = BungieSDK.Group;
 
-class ClanList {
-    constructor() {
+export default class ClanList {
+    constructor(db) {
+        this.db     = db;
         this.cache  = [];
         this.cached = null;
     }
@@ -35,15 +35,18 @@ class ClanList {
     }
 
     async getData() {
-        let cache    = await this.verifyCache();
-        let promises = [];
+        let cache        = await this.verifyCache();
+        let promises     = [];
+        const BungieClan = _BungieClan(this.db);
 
         if(cache) {
             return this.cache;
         }
 
-        for(let clanId of clans) {
-            promises.push(new Clan(clanId))
+        let _clans = await BungieClan.findAll({raw: true});
+
+        for(var clan of clans) {
+            promises.push(new Group(clan.group_id));
         }
 
         return await Promise
@@ -57,7 +60,7 @@ class ClanList {
     }
 
     processResults(data, active) {
-        let msges = ["Fetching clan list"];
+        let msges = ["Clan list :"];
 
         for(var result of data) {
             let detail = result.detail;
@@ -107,5 +110,3 @@ class ClanList {
     }
 
 }
-
-export default new ClanList();
