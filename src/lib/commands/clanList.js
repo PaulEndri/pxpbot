@@ -45,7 +45,7 @@ export default class ClanList {
 
         let _clans = await BungieClan.findAll({raw: true});
 
-        for(var clan of clans) {
+        for(var clan of _clans) {
             promises.push(new Group(clan.group_id));
         }
 
