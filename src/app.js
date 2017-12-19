@@ -30,7 +30,7 @@ export default class App {
         let response = new ResponseMessage(message);
 
         clanlist
-            .get(ctx[1] === 'open')
+            .get(['open', 'active', 'available'].includes(ctx[1]))
             .then((r) => response.send(r))
     }
 }
