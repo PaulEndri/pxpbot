@@ -142,6 +142,7 @@ export default class ClanRefresh {
             let group = await new BungieSDK.Group(clan.group_id);
             let updates = {
                 data:         JSON.stringify(group.clean()),
+                name:         group.detail.name,
                 member_count: group.detail.memberCount,
                 synced_at:    new Date()
             };
