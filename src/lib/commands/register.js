@@ -19,12 +19,14 @@ export default class RegisterTask {
                         deleted:      0,
                         group_id:     id,
                         name:         results.detail.name,
-                        member_count: results.detail.memberCount
+                        member_count: results.detail.memberCount,
+                        latest:       1
                     }
 
                     BungieClan
                         .create(content)
-                        .then(clan => {
+                        .then(async clan => {
+                            await this.db.query(`update bungie_membership set latest = 0 where id in (select id from oldest_latest_clan_view`);
                             resolve(clan)
                         });
                 })

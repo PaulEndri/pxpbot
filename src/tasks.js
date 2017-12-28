@@ -3,13 +3,13 @@ import cron from 'node-cron';
 import db from './lib/database/sqlize';
 
 export default class Tasks {
-    static begin() {
+    static begin(client) {
         cron.schedule('*/10 * * * *', () => {
             let task = new ClanRefresh(db, false);
 
             console.log("Beginning automated task run");
             task
-                .run()
+                .run(0, client)
                 .then(() => {
                     console.log("Succesfully completed automated clan refresh");
                 })

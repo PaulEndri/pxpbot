@@ -3,6 +3,9 @@ import _BungieMembership from '../database/models/bungieMembership';
 import _BungieMember from '../database/models/bungieMember';
 import _BungieMemberError from '../database/models/bungieMemberError';
 import BungieSDK from 'bungie-sdk-alpha';
+import dotenv from 'dotenv';
+
+const env    = dotenv.config();
 
 export default class ClanRefresh {
     constructor(db, msg) {
@@ -17,7 +20,7 @@ export default class ClanRefresh {
             limit : 1
         };
 
-        if(!isNaN(id)) {
+        if(!isNaN(id) && id !== 0) {
             queryObject.where = {group_id : id};
         }
 
@@ -133,7 +136,7 @@ export default class ClanRefresh {
         });
     }
 
-    run(id) {
+    run(id, client) {
         return new Promise(async (resolve, reject) => {
             let clan  = await this.getClan(id);
 
@@ -159,6 +162,13 @@ export default class ClanRefresh {
                         .all(updates)
                         .then(() => {
                             this.log("Refresh succesfully completed");
+
+                            if(updates.member_count >= 75 && _clan.latest == 1 && client !== null) {
+                                client.guilds.map(guild => {
+                                    guild.owner.send(`Sup, ${updates.name} is one of the latest 4 clans and is at ${member_count}/100 members`);
+                                });
+                            }
+
                             resolve();
                         })
                         .catch(e => {

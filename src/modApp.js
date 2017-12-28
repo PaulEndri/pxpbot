@@ -13,10 +13,8 @@ export default class ModeratorApp {
     updates(ctx, message) {
         let messages = [
             "\nUpdates in the latest version:",
-            "\t- This command!",
-            "\t- !refresh now accepts an optional parameters of a bungie Group Id to forcefully refresh a specific group",
-            "\t- !inactive now filters out users already deleted",
-            "\t- !inactivecount functions identically to inactive, just only returns totals"
+            "\t- The latest 4 clans are now recorded in the db",
+            "\t- Refreshes will ping server owner if a latest clan is at 75/100"
         ]
 
         message.channel.send(messages.join("\n"));
@@ -71,7 +69,7 @@ export default class ModeratorApp {
         refreshing = true;
 
         return task
-            .run(ctx[1])
+            .run(ctx[1], this.client)
             .then(results => {
                 refreshing = false;
                 // do nothing

@@ -9,7 +9,8 @@ export default function Model(database) {
             group_id:     Sqlize.INTEGER,
             synced_at:    Sqlize.DATE,
             name:         Sqlize.STRING,
-            member_count: Sqlize.INTEGER
+            member_count: Sqlize.INTEGER,
+            latest:       Sqlize.BOOLEAN
         }
     )
 };

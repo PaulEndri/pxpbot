@@ -5,7 +5,7 @@ import Tasks from './src/tasks';
 
 const env    = dotenv.config();
 const client = new Discord.Client();
-const app    = new App();
+const app    = new App(client, env);
 
 client.on('ready', () => {
     console.log('ready');
@@ -15,6 +15,6 @@ client.on('message', message => {
     app.process(message);    
 });
 
-Tasks.begin();
+Tasks.begin(client, env);
 
 client.login(env.parsed.BOT_TOKEN);

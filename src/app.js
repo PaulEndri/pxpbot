@@ -6,6 +6,11 @@ import ResponseMessage from './lib/util/responseMessage';
 const modApp = new ModApp(db);
 
 export default class App {
+    constructor(discordClient) {
+        this.client   = discordClient;
+        modApp.client = discordClient;
+    }
+
     process(message) {
         if(!message.member || message.content.indexOf('!') !== 0) {
             return null;
