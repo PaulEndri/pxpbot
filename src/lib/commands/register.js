@@ -26,7 +26,7 @@ export default class RegisterTask {
                     BungieClan
                         .create(content)
                         .then(async clan => {
-                            await this.db.query(`update bungie_membership set latest = 0 where id in (select id from oldest_latest_clan_view`);
+                            await this.db.query(`update bungie_membership set latest = 0 where id in (select id from oldest_latest_clan_view)`);
                             resolve(clan)
                         });
                 })
