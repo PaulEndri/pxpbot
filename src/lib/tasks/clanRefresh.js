@@ -165,7 +165,7 @@ export default class ClanRefresh {
 
                             if(group.detail.memberCount >= 75 && _clan.latest == 1 && client !== null) {
                                 client.guilds.map(guild => {
-                                    guild.owner.send(`Sup, ${updates.name} is one of the latest 4 clans and is at ${member_count}/100 members`);
+                                    guild.owner.send(`Sup, ${group.detail.name} is one of the latest 4 clans and is at ${group.detail.memberCount}/100 members`);
                                 });
                             }
 
