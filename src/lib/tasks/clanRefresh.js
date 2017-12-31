@@ -163,7 +163,7 @@ export default class ClanRefresh {
                         .then(() => {
                             this.log("Refresh succesfully completed");
 
-                            if(updates.member_count >= 75 && _clan.latest == 1 && client !== null) {
+                            if(group.detail.memberCount >= 75 && _clan.latest == 1 && client !== null) {
                                 client.guilds.map(guild => {
                                     guild.owner.send(`Sup, ${updates.name} is one of the latest 4 clans and is at ${member_count}/100 members`);
                                 });
