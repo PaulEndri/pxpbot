@@ -2,6 +2,7 @@ import ClanRefresh from './lib/tasks/clanRefresh';
 import Inactive from './lib/commands/inactive';
 import RegisterTask from './lib/commands/register';
 import ResponseMessage from './lib/util/responseMessage';
+import Ark from './lib/ark/ark';
 
 var refreshing = false;
 
@@ -68,6 +69,9 @@ export default class ModeratorApp {
         let task   = new ClanRefresh(this.db, message);
         refreshing = true;
 
+        // after 15 seconds, even if we're still processing, allow another refresh
+        setTimeout(()=>{refreshing=false}, 15000);
+
         return task
             .run(ctx[1], this.client)
             .then(results => {
@@ -80,4 +84,16 @@ export default class ModeratorApp {
                 message.channel.send("An error has occurred.");
             });
     }
+
+    /*ark(ctx, message) {
+        let response = new ResponseMessage(message);        
+
+        return Ark
+            .handle(ctx, message)
+            .then(results => response.send(results))
+            .catch(e => {
+                console.log(e);
+                message.channel.send("An error has occured");
+            });
+    }*/
 }
