@@ -85,7 +85,7 @@ export default class ModeratorApp {
             });
     }
 
-    /*ark(ctx, message) {
+    ark(ctx, message) {
         let response = new ResponseMessage(message);        
 
         return Ark
@@ -95,5 +95,5 @@ export default class ModeratorApp {
                 console.log(e);
                 message.channel.send("An error has occured");
             });
-    }*/
+    }
 }
