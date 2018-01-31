@@ -7,7 +7,7 @@ const query         = new SourceQuery(timeoutBuffer);
 
 query.open(ArkServer, ArkPort);
 
-class Ark {
+export default class Ark {
     static handle(ctx, message) {
         let parameter = ctx[1];
 
