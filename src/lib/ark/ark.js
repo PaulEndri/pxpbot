@@ -2,7 +2,7 @@ import SourceQuery from 'sourcequery';
 
 const timeoutBuffer = 3000;
 const ArkServer     = '45.35.132.58';
-const ArkPort       = '20176';
+const ArkPort       = '20716';
 const query         = new SourceQuery(timeoutBuffer);
 
 query.open(ArkServer, ArkPort);
@@ -59,7 +59,7 @@ export default class Ark {
                     try {
                         worldTime = rules.find(r => r.name === 'DayTime_s').value.toString();
                         worldTime = worldTime.length === 3 ? worldTime + "0" : worldTime;
-                        worldTime = worldTime.subString(0, 1) + ":" + worldTime.subString(2);
+                        worldTime = worldTime.substring(0, 2) + ":" + worldTime.substring(2);
                     } catch(e) {
                         worldTime = 'Unknown'
                     }
@@ -70,8 +70,8 @@ export default class Ark {
                         `\tMap: ${information.map}`,
                         `\tPlayers: ${information.players}/${information.maxplayers}`,
                         '\tWorld Time: ' + worldTime,
-                        '\tDedicated: ' + information.servertype === "d" ? "Yes" : "No",
-                        '\tPlatform: ' + information.environment === "w" ? "Windows" : information.environment === "l" ? "Linux" : "Mac"
+                        '\tDedicated: ' + (information.servertype === "d" ? "Yes" : "No"),
+                        '\tPlatform: ' + (information.environment === "w" ? "Windows" : information.environment === "l" ? "Linux" : "Mac")
                     ];
 
                     resolve(serverInformation);
