@@ -43,14 +43,15 @@ export default class ClanRefresh {
         };
 
         let contents     = {
-            deleted:     false,
-            name:        memberData.userInfo.displayName,
-            last_seen:   memberData.dateLastPlayed,
-            type:        membership.membership_type,
-            bungie_id:   membership.bungie_member_id,
-            destiny_id:  membership.destiny_member_id,
-            type:        membership.membership_type,
-            data:        JSON.stringify({
+            deleted:        false,
+            name:           memberData.userInfo.displayName,
+            last_seen:      memberData.dateLastPlayed,
+            type:           membership.membership_type,
+            bungie_id:      membership.bungie_member_id,
+            destiny_id:     membership.destiny_member_id,
+            active_clan_id: membership.clan_id,
+            type:           membership.membership_type,
+            data:           JSON.stringify({
                 profile: memberData
             })
         };
@@ -154,7 +155,8 @@ export default class ClanRefresh {
                 .update(updates)
                 .then(async _clan => {
                     await this.db.query(`update bungie_membership set deleted = 1 where bungie_clan_id = ${clan.group_id}`);
-    
+                    await this.db.query(`update bungie_member set active_clan_id = NULL where active_clan_id = ${clan.group_id}`);
+                    
                     let members = await group.getMembers();                
                     let updates = members.members.map(member => this.refreshMemberData(member, clan));
     

@@ -2,6 +2,7 @@ import ClanList from './lib/commands/clanList';
 import db from './lib/database/sqlize';
 import ModApp from './modApp';
 import ResponseMessage from './lib/util/responseMessage';
+import Roles from './lib/roles/role';
 
 const modApp = new ModApp(db);
 
@@ -28,6 +29,12 @@ export default class App {
         } else if(adv === true && typeof(modApp[key]) === 'function') {
             modApp[key](ctx, message);
         }
+    }
+
+    roles(ctx, message) {
+        let roles = new Roles(db, message);
+
+        roles.toggle(ctx);
     }
 
     clanlist(ctx, message) {

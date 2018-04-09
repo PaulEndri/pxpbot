@@ -3,10 +3,10 @@ import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
 
 const env = dotenv.config();
-const hostname = env.parsed.HOSTNAME;
-const database = env.parsed.DATABASE;
-const username = env.parsed.USERNAME;
-const password = env.parsed.PASSWORD;
+const hostname = "208.97.173.174";
+const database = "winpixelpub";
+const username = "winpixelpub";
+const password = "wrathIncarnate";
 
 var connection = new Sequelize(database, username, password, {
     host    : hostname,
