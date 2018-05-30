@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 import dotenv from 'dotenv';
-import App from './src/app';
-import Tasks from './src/tasks';
+import App from './app';
+import Tasks from './tasks';
 
 const env    = dotenv.config();
 const client = new Discord.Client();
