@@ -1,5 +1,5 @@
 apps:
   - script : lib/index.js
-    instances: 4
+    instances: 1
     exec_mode: cluster
     watch: true
