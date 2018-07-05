@@ -7,7 +7,20 @@ export default class RegisterTask {
         this.db = db;
     }
 
-    run(id) {
+    async setPlatform(id, platform) {
+        const BungieClan = _BungieClan(this.db);
+        const clan       = await BungieClan.findOne({where: {group_id: id}});
+
+        if (!clan) {
+            return 'Clan not found'
+        }
+
+        await clan.update({platform})
+
+        return 'Clan platform succesfully updated'
+    }
+
+    run(id, platform) {
         const BungieClan = _BungieClan(this.db);
         
         return new Promise((resolve, reject) => {
@@ -20,6 +33,7 @@ export default class RegisterTask {
                         group_id:     id,
                         name:         results.detail.name,
                         member_count: results.detail.memberCount,
+                        platform:     platform,
                         latest:       1
                     }
 

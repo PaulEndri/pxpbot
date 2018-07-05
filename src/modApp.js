@@ -23,11 +23,21 @@ export default class ModeratorApp {
         return true;
     }
 
+    updateclan(ctx, message) {
+        const registerTask = new RegisterTask(this.db);
+
+        return registerTask
+            .setPlatform(ctx[1], ctx[2])
+            .then(response => message.channel.send(response))
+            .catch(e => message.channel.send('An error has occured'))
+    }
+
+
     registerclan(ctx, message) {
-        var registerTask = new RegisterTask(this.db);
+        const registerTask = new RegisterTask(this.db);
         
         return registerTask
-            .run(ctx[1])
+            .run(ctx[1], ctx[2])
             .then(clan => {
                 message.channel.send(`Succesfully registered ${clan.name}`);
             })

@@ -10,6 +10,7 @@ export default function Model(database) {
             synced_at:    Sqlize.DATE,
             name:         Sqlize.STRING,
             member_count: Sqlize.INTEGER,
+            platform:     Sqlize.STRING,
             latest:       Sqlize.BOOLEAN
         }
     )
