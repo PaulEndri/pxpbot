@@ -60,9 +60,10 @@ export default class Inactive {
             })
                 .then(results => {
                     resolve(results.map(_result => {
-                        let _lastSeen = moment(_result.last_seen).format('MM/DD/YYYY');
-                        let clanName  = _result['Member.Clan.name'];
-                        let type      = typeMap[_result['Member.membership_type']];
+                        const _lastSeen = moment(_result.last_seen).format('MM/DD/YYYY');
+                        const clanName  = _result['Member.Clan.name'];
+                        const type      = typeMap[_result['Member.membership_type']];
+
                         return `[${clanName}]-[${type}] - ${_result.name} was last seen ${_lastSeen}`;
                     }));
                 });

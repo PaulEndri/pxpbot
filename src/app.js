@@ -51,13 +51,4 @@ export default class App {
 
         roles.toggle(ctx);
     }
-
-    clanlist(ctx, message) {
-        let clanlist = new ClanList(db);
-        let response = new ResponseMessage(message);
-
-        clanlist
-            .get(['open', 'active', 'available'].includes(ctx[1]))
-            .then((r) => response.send(r))
-    }
 }
