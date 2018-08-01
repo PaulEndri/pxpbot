@@ -4,19 +4,21 @@ import _BungieMember from '../database/models/bungieMember';
 import BungieSDK from 'bungie-sdk-alpha';
 import {Op} from 'sequelize';
 import moment from 'moment';
+import {isNullOrUndefined} from 'util';
 
 const typeMap = {
     "1" : "XB1",
     "2" : "PS4",
     "4" : "PC"
 };
+
 // I love sequelize - Not
 export default class Inactive {
     constructor(db) {
         this.db = db;
     }
 
-    run(span) {
+    run(span, clanId) {
         const BungieMember     = _BungieMember(this.db);
         const BungieMembership = _BungieMembership(this.db);
         const BungieClan       = _BungieClan(this.db);
@@ -34,6 +36,12 @@ export default class Inactive {
         let threshold = moment().subtract(span, 'days').valueOf();
 
         return new Promise((resolve, reject) => {
+            const associationWhere = {deleted: false}
+
+            if (!isNullOrUndefined(clanId) && clanId > 0) {
+                associationWhere.active_clan_id = clanId
+            }
+
             BungieMember.findAll({
                 include : [
                     {

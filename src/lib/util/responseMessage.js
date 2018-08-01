@@ -10,7 +10,7 @@ export default class ResponseMessage {
             if(_response.length < 2000) {
                 this.msg.channel.send(_response);
             } else {
-                let partCount = Math.ceil(_response.length/2000);
+                let partCount  = Math.ceil(_response.length/2000);
                 let resultSize = Math.ceil(content.length/partCount);
     
                 for(let i = 0; i < partCount; i++) {

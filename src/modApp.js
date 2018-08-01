@@ -11,18 +11,6 @@ export default class ModeratorApp {
         this.db = db;
     }
 
-    updates(ctx, message) {
-        let messages = [
-            "\nUpdates in the latest version:",
-            "\t- The latest 4 clans are now recorded in the db",
-            "\t- Refreshes will ping server owner if a latest clan is at 75/100"
-        ]
-
-        message.channel.send(messages.join("\n"));
-
-        return true;
-    }
-
     updateclan(ctx, message) {
         const registerTask = new RegisterTask(this.db);
 
@@ -32,14 +20,13 @@ export default class ModeratorApp {
             .catch(e => message.channel.send('An error has occured'))
     }
 
-
     registerclan(ctx, message) {
         const registerTask = new RegisterTask(this.db);
         
         return registerTask
             .run(ctx[1], ctx[2])
             .then(clan => {
-                message.channel.send(`Succesfully registered ${clan.name}`);
+                message.channel.send(`Succesfully registered ${clan.name} for platform ${clan.platform}`);
             })
             .catch(e => {
                 message.channel.send(`An error has occured`);
@@ -50,9 +37,10 @@ export default class ModeratorApp {
         const InactiveTask = new Inactive(this.db);
         let response       = new ResponseMessage(message);        
         let span           = parseInt(ctx[1]) || 30;
+        let clanId         = parseInt(ctx[2]) || false;
 
         return InactiveTask
-            .run(span)
+            .run(span, clanId)
             .then(r => response.send(r))
             .then(results => {
                 message.channel.send(`A total of ${results.length} members have been inactive for ${span} days`);
@@ -92,18 +80,6 @@ export default class ModeratorApp {
                 console.log(e);
                 refreshing = false;
                 message.channel.send("An error has occurred.");
-            });
-    }
-
-    ark(ctx, message) {
-        let response = new ResponseMessage(message);        
-
-        return Ark
-            .handle(ctx, message)
-            .then(results => response.send(results))
-            .catch(e => {
-                console.log(e);
-                message.channel.send("An error has occured");
             });
     }
 }

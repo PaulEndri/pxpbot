@@ -86,12 +86,6 @@ export default class ClanRefresh {
                 let memberData  = await this.refreshMember(membership, profile.profile.data);
             }
             catch(e) {
-                await bungieMemberError
-                    .create({
-                        membership_id: membership.id,
-                        response:      JSON.stringify(e),
-                        data:          JSON.stringify(member)
-                    })
                 console.log("[ERROR]");
                 console.log(e);
             }
