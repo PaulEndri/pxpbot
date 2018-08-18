@@ -1,7 +1,5 @@
-import ClanList from './lib/commands/clanList';
 import db from './lib/database/sqlize';
 import ModApp from './modApp';
-import ResponseMessage from './lib/util/responseMessage';
 import Roles from './lib/roles/role';
 
 const modApp = new ModApp(db);

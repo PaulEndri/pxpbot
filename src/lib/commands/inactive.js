@@ -22,7 +22,7 @@ export default class Inactive {
         const BungieMember     = _BungieMember(this.db);
         const BungieMembership = _BungieMembership(this.db);
         const BungieClan       = _BungieClan(this.db);
-
+        console.log(span, clanId)
         BungieMember.hasOne(BungieMembership, {
             foreignKey: 'member_id',
             as        : 'Member'
@@ -38,15 +38,15 @@ export default class Inactive {
         return new Promise((resolve, reject) => {
             const associationWhere = {deleted: false}
 
-            if (!isNullOrUndefined(clanId) && clanId > 0) {
-                associationWhere.active_clan_id = clanId
+            if (!isNullOrUndefined(clanId)) {
+                associationWhere.clan_id = clanId
             }
 
             BungieMember.findAll({
                 include : [
                     {
                         association: 'Member', 
-                        where : {deleted: false},
+                        where : associationWhere,
                         include:[{association: 'Clan'}]
                     }
                 ],

@@ -2,7 +2,6 @@ import ClanRefresh from './lib/tasks/clanRefresh';
 import Inactive from './lib/commands/inactive';
 import RegisterTask from './lib/commands/register';
 import ResponseMessage from './lib/util/responseMessage';
-import Ark from './lib/ark/ark';
 
 var refreshing = false;
 
@@ -35,9 +34,9 @@ export default class ModeratorApp {
 
     inactive(ctx, message) {
         const InactiveTask = new Inactive(this.db);
-        let response       = new ResponseMessage(message);        
-        let span           = parseInt(ctx[1]) || 30;
-        let clanId         = parseInt(ctx[2]) || false;
+        const response     = new ResponseMessage(message);
+        const span         = parseInt(ctx[1]) || 30;
+        const clanId       = +ctx[2] || false;
 
         return InactiveTask
             .run(span, clanId)
