@@ -42,7 +42,7 @@ export default class ModeratorApp {
             .run(span, clanId)
             .then(r => response.send(r))
             .then(results => {
-                message.channel.send(`A total of ${results.length} members have been inactive for ${span} days`);
+                message.channel.send(`A total of ${results.length} members have been inactive for ${span} days ${clanId ? 'for clan ' + clanId : ''}`);
             });
     }
 

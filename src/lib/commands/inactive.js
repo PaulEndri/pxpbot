@@ -22,7 +22,7 @@ export default class Inactive {
         const BungieMember     = _BungieMember(this.db);
         const BungieMembership = _BungieMembership(this.db);
         const BungieClan       = _BungieClan(this.db);
-        console.log(span, clanId)
+
         BungieMember.hasOne(BungieMembership, {
             foreignKey: 'member_id',
             as        : 'Member'
@@ -37,10 +37,6 @@ export default class Inactive {
 
         return new Promise((resolve, reject) => {
             const associationWhere = {deleted: false}
-
-            if (!isNullOrUndefined(clanId)) {
-                associationWhere.clan_id = clanId
-            }
 
             BungieMember.findAll({
                 include : [
@@ -59,7 +55,11 @@ export default class Inactive {
                 raw : true
             })
                 .then(results => {
-                    resolve(results.map(_result => {
+                    resolve(results
+                        .filter(_result => {
+                            return _result['Member.Clan.group_id'] == clanId
+                        })
+                        .map(_result => {
                         const _lastSeen = moment(_result.last_seen).format('MM/DD/YYYY');
                         const clanName  = _result['Member.Clan.name'];
                         const type      = typeMap[_result['Member.membership_type']];
