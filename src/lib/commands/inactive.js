@@ -57,7 +57,7 @@ export default class Inactive {
                 .then(results => {
                     resolve(results
                         .filter(_result => {
-                            return _result['Member.Clan.group_id'] == clanId
+                            return isNullOrUndefined(clanId) ? _result : _result['Member.Clan.group_id'] == clanId
                         })
                         .map(_result => {
                         const _lastSeen = moment(_result.last_seen).format('MM/DD/YYYY');
