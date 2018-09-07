@@ -9,16 +9,5 @@
     "env_production" : {
        "NODE_ENV": "production"
     }
-  }],
-  "deploy": {
-    "production" : {
-      "user": "ec2-user",
-      "host": ["ec2-52-5-51-96.compute-1.amazonaws.com"],
-      "ref": "origin/production",
-      "key": "$HOME/.ssh/AwsPixelPubBot.pem",
-      "pre-setup": "sudo su root",
-      "path": "/home/ec2-user/pxpbot",
-      "post-deploy": "pm2 start ./lib/index.js"
-    }
-  }
+  }]
 }
