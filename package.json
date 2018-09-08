@@ -40,7 +40,7 @@
       "user": "ec2-user",
       "host": ["ec2-52-5-51-96.compute-1.amazonaws.com"],
       "ref": "origin/production",
-      "key": "./AwsPixelPubBot.pem",
+      "key": "AwsPixelPubBot.pem",
       "pre-setup": "sudo su root",
       "path": "/home/ec2-user/pxpbot",
       "repo": "https://github.com/PaulEndri/pxpbot.git",
