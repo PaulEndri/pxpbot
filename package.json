@@ -43,8 +43,7 @@
       "key": "C:/Users/Paul/.ssh/AwsPixelPubBot.pem",
       "pre-setup": "sudo su root",
       "path": "/home/ec2-user/pxpbot",
-      "repo": "https://github.com/PaulEndri/pxpbot.git",
-      "post-deploy": "pm2 start ./lib/index.js"
+      "repo": "https://github.com/PaulEndri/pxpbot.git"
     }
   }
 }
