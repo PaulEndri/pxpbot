@@ -41,7 +41,8 @@
       "host": ["ec2-52-5-51-96.compute-1.amazonaws.com"],
       "ref": "origin/production",
       "key": "C:/Users/Paul/.ssh/AwsPixelPubBot.pem",
-      "pre-setup": "sudo su root",
+      "pre-setup": "sudo su root; cd pixelpubbot",
+      "pre-deploy": "sudo su root; cd pixelpubbot",
       "path": "/home/ec2-user/pxpbot",
       "repo": "https://github.com/PaulEndri/pxpbot.git"
     }
