@@ -42,7 +42,7 @@
       "ref": "origin/production",
       "key": "C:/Users/Paul/.ssh/AwsPixelPubBot.pem",
       "pre-setup": "sudo su root; cd pxpbot",
-      "pre-deploy": "sudo su root; cd pxpbot",
+      "pre-deploy": "sudo su root",
       "path": "/home/ec2-user/pxpbot",
       "repo": "https://github.com/PaulEndri/pxpbot.git"
     }
