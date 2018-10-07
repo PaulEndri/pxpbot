@@ -34,17 +34,5 @@
     "build": "babel src --out-dir lib"
   },
   "author": "",
-  "license": "ISC",
-  "deploy": {
-    "production" : {
-      "user": "ec2-user",
-      "host": ["ec2-52-5-51-96.compute-1.amazonaws.com"],
-      "ref": "origin/production",
-      "key": "C:/Users/Paul/.ssh/AwsPixelPubBot.pem",
-      "pre-setup": "sudo su root; cd pxpbot",
-      "pre-deploy": "sudo su root",
-      "path": "/home/ec2-user/pxpbot",
-      "repo": "https://github.com/PaulEndri/pxpbot.git"
-    }
-  }
+  "license": "ISC"
 }

@@ -1,7 +1,19 @@
 {
+  "deploy": {
+    "production" : {
+      "user": "ec2-user",
+      "host": ["ec2-52-5-51-96.compute-1.amazonaws.com"],
+      "ref": "origin/production",
+      "key": "C:/Users/Paul/.ssh/AwsPixelPubBot.pem",
+      "pre-setup": "sudo su root",
+      "pre-deploy": "sudo su root",
+      "path": "/pxpbot",
+      "repo": "git@github.com/PaulEndri/pxpbot.git"
+    }
+  },
   "apps" : [{
     "name"        : "PixelPubBot",
-    "script"      : "./lib/index.js.js",
+    "script"      : "lib/index",
     "watch"       : true,
     "env": {
       "NODE_ENV": "development"

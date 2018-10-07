@@ -1,8 +1,11 @@
 import db from './lib/database/sqlize';
 import ModApp from './modApp';
 import Roles from './lib/roles/role';
+import ChannelGate from './lib/util/channelGate';
 
 const modApp = new ModApp(db);
+const Gate = new ChannelGate();
+const STREAM_CHANNEL_NAME = 'stream-promo';
 
 /**
  * Core message handling app
@@ -25,17 +28,25 @@ export default class App {
      * @param {Message} message 
      */
     process(message) {
-        if (!message.member || message.content.indexOf('!') !== 0) {
+        const isPromoChannel = message.channel.name === STREAM_CHANNEL_NAME;
+
+        if (!isPromoChannel && (!message.member || message.content.indexOf('!') !== 0)) {
             return null;
         }
 
         const mod = message.member.roles.find('id', '298481589506015232') ? true : false;
         const adm = message.member.roles.find('id', '298481229316227073') ? true : false;
         const adv = mod || adm;
+
+        if (isPromoChannel) {
+            return Gate.handle(message, adv === true);
+        }
+
+
         const msg = message.content.toLowerCase();
         const ctx = msg.split(' ');
         const key = ctx[0].replace('!', '');
-        
+         
         if (typeof(this[key]) === 'function') {
             this[key](ctx, message);
         } else if(adv === true && typeof(modApp[key]) === 'function') {

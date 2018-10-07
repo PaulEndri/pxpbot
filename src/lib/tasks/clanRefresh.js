@@ -42,7 +42,7 @@ export default class ClanRefresh {
             where : {destiny_id : membership.destiny_member_id}
         };
 
-        let contents     = {
+        let contents = {
             deleted:        false,
             name:           memberData.userInfo.displayName,
             last_seen:      memberData.dateLastPlayed,
