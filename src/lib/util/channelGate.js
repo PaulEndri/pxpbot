@@ -5,7 +5,7 @@ export default class ChannelGate {
     async handle(message, isStaff) {
         const {channel, createdAt, member} = message;
 
-        if (RECORD[member.id] === undefined) {
+        if (RECORD[member.id] === undefined || isStaff === true) {
             RECORD[member.id] = createdAt.getTime();
 
             if (isStaff) {
