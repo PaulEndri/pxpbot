@@ -1,6 +1,7 @@
 import Discord from 'discord.js';
 import dotenv from 'dotenv';
 import App from './app';
+import Tasks from './src/tasks';
 
 const env    = dotenv.config();
 const client = new Discord.Client();
@@ -15,3 +16,5 @@ client.on('message', message => {
 });
 
 client.login(env.parsed.BOT_TOKEN);
+
+Tasks.begin(client, env);
